@@ -6,46 +6,56 @@
  * @LastEditTime: 2021-06-04 14:11:04
 -->
 <template>
-  <div class="content">
-  </div>
+  <List
+    v-model:loading="loading"
+    :finished="finished"
+    finished-text="没有更多了"
+    @load="onLoad"
+  >
+  <Cell v-for="(item,i) in list" :key="i" :title="i" />
+</List>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, getCurrentInstance, onMounted, PropType, reactive, ref, toRefs } from 'vue';
+import { defineComponent, PropType, reactive, toRefs } from 'vue';
 
-import { Button} from 'vant';
+import { List,Cell} from 'vant';
 import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: 'searchList',
   // 父组件传子组件参数
   props: {
-    name: {
-      type: String as PropType<null | ''>,
-      default: 'vue3.x'
-    }
+     list: {
+       type: Array as PropType<object[]>,
+       default: () => [1,2,3]
+     },
+     loading: {
+       type: Boolean,
+       default: false
+     }
   },
   components: {
-    Button
+    Cell,
+    List
   },
-  emits: ["emits-name"], // 为了提示作用
+  emits: ["load"], // 为了提示作用
   setup (props, context) {
     const state = reactive({
-      token:<string>'',
-        noVip:<boolean>true
+      finished:<boolean>true
     });
     const router = useRouter()
 
     const  login = ()=> {
       router.push('/login')
     }
-    const shoping = ()=>{
-      context.emit('emits-name')
+    const onLoad = ()=>{
+      context.emit('load')
     }
     return {
-      state,
+      ...toRefs(state),
       login,
-      shoping
+      onLoad
     }
   }
 });

@@ -3,7 +3,7 @@
  * @Autor: cxt
  * @Date: 2021-06-03 17:34:07
  * @LastEditors: cxt
- * @LastEditTime: 2021-06-04 11:46:59
+ * @LastEditTime: 2021-06-04 17:34:15
 -->
 
 <template>
@@ -18,14 +18,14 @@
     </div>
     <CellGroup>
       <Field
-        v-model="state.value1"
+        v-model="value1"
         required
         type="tel" 
         label="手机号"
         placeholder="请输入手机号"
       />
       <Field
-        v-model="state.value2"
+        v-model="value2"
         required
         label="密码"
         placeholder="请输入手机号"
@@ -36,7 +36,7 @@
 </template>
 <script lang="ts" >
 import { NavBar,Button,Field,CellGroup,Toast } from 'vant';
-import { reactive,defineComponent } from "vue";
+import { reactive,defineComponent,toRefs } from "vue";
 import { useRouter } from "vue-router";
 
 
@@ -69,7 +69,7 @@ export default defineComponent({
 
     }
     return {
-      state,
+      ...toRefs(state),
       onClickLeft,
       submit
     };

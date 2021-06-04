@@ -3,7 +3,7 @@
  * @Autor: cxt
  * @Date: 2021-06-03 18:01:25
  * @LastEditors: cxt
- * @LastEditTime: 2021-06-04 10:48:15
+ * @LastEditTime: 2021-06-04 17:41:07
 -->
 <template>
   <div class="list">
@@ -27,13 +27,9 @@ interface IState {
    name: 'Content',
    // 父组件传子组件参数
    props: {
-     name: {
-       type: String as PropType<null | ''>,
-       default: 'vue3.x'
-     },
      list: {
        type: Array as PropType<object[]>,
-       default: () => []
+       default: () => [1,2,3]
      }
    },
    components: {
@@ -46,8 +42,6 @@ interface IState {
      onMounted(() => {
  
      })
- 
-     const list = reactive([1,2,3,4])
      let active:number = 0
      const state = reactive<IState>({
       active: 0,
@@ -57,7 +51,6 @@ interface IState {
      }
      return {
       ...toRefs(state),
-      list,
       handleClick
      }
    }

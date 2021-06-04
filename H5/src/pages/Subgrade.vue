@@ -3,7 +3,7 @@
  * @Autor: cxt
  * @Date: 2021-06-03 17:38:56
  * @LastEditors: cxt
- * @LastEditTime: 2021-06-04 12:01:25
+ * @LastEditTime: 2021-06-04 17:43:25
 -->
 
 <template>
@@ -13,7 +13,7 @@
         <Col span="18">
           <form action="/">
             <Search
-              v-model="state.value"
+              v-model="value"
               shape="round"
               background="rgb(64, 223, 183)"
               placeholder="请输入学校/年级/科目等"
@@ -22,38 +22,44 @@
           </form>
         </Col>
         <Col span="6">
-          <Login @emitsName="state.show= true"/>
+          <Login @emitsName="show= true"/>
         </Col>
       </Row>
     </div>
-      <div style="flex: 1 1 0%; display: -webkit-flex;">
+    <div v-if="searchList.length===0" class="body" >
       <List/>
       <Content/>
     </div>
-    <ActionSheet  v-model:show="state.show" :actions="actions" @select="onSelect" />
+    <SearchList :loading="loading" @load="load"  :list="searchList" />
+    <ActionSheet  v-model:show="show" :actions="actions" @select="onSelect" />
   </div>
 </template>
 <script lang="ts" >
 import Login from '../components/LoginButton.vue'
 import List from '../components/List.vue'
+import SearchList from '../components/SearchList.vue'
 import Content from '../components/Content.vue'
 import { Col, Row ,Search,Toast,ActionSheet} from 'vant';
-import { reactive,defineComponent,ref } from "vue";
+import { reactive,defineComponent,toRefs,ref } from "vue";
 export default defineComponent({
   name: "subgrade",
   components: {
-    Col: Col,
-    Row: Row,
-    Search:Search,
+    Col,
+    Row,
+    Search,
     Login,
     List,
     ActionSheet,
-    Content
+    Content,
+    SearchList
   },  
   setup() {
+    const sonRef = ref(null)
     const state = reactive({
       show:<boolean>false,
-      value:<string>''
+      value:<string>'',
+      searchList:[],
+      loading:<boolean>false
     });
     const actions: {name:string}[] = [
       { name: '一个月 19元' },
@@ -67,11 +73,15 @@ export default defineComponent({
       state.show = false;
       Toast(item.name);
     };
+    const load = ()=>{
+      state.loading=false
+    }
     return {
-      state,
+      ...toRefs(state),
       onSearch,
       actions,
-      onSelect
+      onSelect,
+      load
     };
   },
 });
@@ -86,6 +96,10 @@ export default defineComponent({
     flex: 1;
     .header {
       background: rgb(64, 223, 183);
+    }
+    .body{
+      display: flex;
+      flex: 1 1 0%; 
     }
   }
 </style>

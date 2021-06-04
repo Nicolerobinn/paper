@@ -3,7 +3,7 @@
  * @Autor: cxt
  * @Date: 2021-06-03 17:39:15
  * @LastEditors: cxt
- * @LastEditTime: 2021-06-04 11:03:10
+ * @LastEditTime: 2021-06-04 17:35:18
 -->
 
 <template>
@@ -11,22 +11,22 @@
     <List
     class="list"
       style='overflow: hidden;flex: 1 1 0%; background-image: url("http://tk.naxia100.com/wxpublic/bk1.png"); background-size: 100% 100%;'
-      :finished="state.finished"
+      :finished="finished"
       finished-text="没有更多了"
     >
-        <div v-for="item in state.list" :key="item" class="item" @click="go(item.title)">
+        <div v-for="item in list" :key="item" class="item" @click="go(item.title)">
           <Cell 
            :title="item.title" :value="`试卷份数：39份`" label="浏览：286次"
            style="background-color:transparent">
           </Cell>
         </div>
     </List>
-    <ActionSheet  v-model:show="state.show" :actions="actions" @select="onSelect" />
+    <ActionSheet  v-model:show="show" :actions="actions" @select="onSelect" />
   </div>
 </template>
 <script lang="ts" >
 import { List,Cell,ActionSheet,Toast } from 'vant';
-import { reactive,defineComponent } from "vue";
+import { reactive,defineComponent,toRefs } from "vue";
 import { useRouter } from "vue-router";
 
 
@@ -60,7 +60,7 @@ export default defineComponent({
     };
 
     return {
-      state,
+      ...toRefs(state),
       actions,
       go,
       onSelect
