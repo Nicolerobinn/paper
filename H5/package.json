@@ -13,7 +13,6 @@
     "sass": "^1.34.1",
     "scss": "^0.2.4",
     "vant": "^3.0.18",
-    "vite-plugin-imp": "^2.0.7",
     "vite-plugin-style-import": "^0.10.1",
     "vue": "^3.0.5",
     "vue-router": "4",
