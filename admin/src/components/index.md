@@ -13,15 +13,6 @@ sidemenu: false
 
 这个组件自带了一些 Pro 的配置，你一般都需要改掉它的信息。
 
-```tsx
-/**
- * background: '#f0f2f5'
- */
-import React from 'react';
-import Footer from '@/components/Footer';
-
-export default () => <Footer />;
-```
 
 ## HeaderDropdown 头部下拉列表
 

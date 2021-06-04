@@ -1,7 +1,13 @@
+/*
+ * @Desc:
+ * @Autor: cxt
+ * @Date: 2021-06-03 16:47:19
+ * @LastEditors: cxt
+ * @LastEditTime: 2021-06-04 14:36:53
+ */
 import { Tag, Space } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import React from 'react';
-import { useModel, SelectLang } from 'umi';
+import { useModel } from 'umi';
 import Avatar from './AvatarDropdown';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
@@ -52,21 +58,12 @@ const GlobalHeaderRight: React.FC = () => {
         //   console.log('input', value);
         // }}
       />
-      <span
-        className={styles.action}
-        onClick={() => {
-          window.open('https://pro.ant.design/docs/getting-started');
-        }}
-      >
-        <QuestionCircleOutlined />
-      </span>
       <Avatar />
       {REACT_APP_ENV && (
         <span>
           <Tag color={ENVTagColor[REACT_APP_ENV]}>{REACT_APP_ENV}</Tag>
         </span>
       )}
-      <SelectLang className={styles.action} />
     </Space>
   );
 };

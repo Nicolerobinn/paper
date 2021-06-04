@@ -1,3 +1,10 @@
+/*
+ * @Desc:
+ * @Autor: cxt
+ * @Date: 2021-06-03 16:47:19
+ * @LastEditors: cxt
+ * @LastEditTime: 2021-06-04 14:35:53
+ */
 import { SearchOutlined } from '@ant-design/icons';
 import { AutoComplete, Input } from 'antd';
 import useMergedState from 'rc-util/es/hooks/useMergedState';
@@ -63,12 +70,6 @@ const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
         }
       }}
     >
-      <SearchOutlined
-        key="Icon"
-        style={{
-          cursor: 'pointer',
-        }}
-      />
       <AutoComplete
         key="AutoComplete"
         className={inputClass}
