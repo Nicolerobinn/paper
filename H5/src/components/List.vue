@@ -1,3 +1,10 @@
+<!--
+ * @Desc: 
+ * @Autor: cxt
+ * @Date: 2021-06-03 18:01:25
+ * @LastEditors: cxt
+ * @LastEditTime: 2021-06-04 10:48:15
+-->
 <template>
   <div class="list">
     <div v-for="(item,i) in list" class="item" :class="[active===i?'active':'']" :key="i" @click="handleClick(i)">
@@ -57,7 +64,7 @@ interface IState {
  });
  </script>
 
- <style lang="scss">
+ <style lang="scss" scoped>
   .list {
     height: 100%;
     width: 1.5rem;
