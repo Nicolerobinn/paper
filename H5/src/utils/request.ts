@@ -1,5 +1,13 @@
+/*
+ * @Author: your name
+ * @Date: 2021-06-05 10:46:23
+ * @LastEditTime: 2021-06-05 11:13:08
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \paper\H5\src\utils\request.ts
+ */
 import axios from "axios";
-const baseURL = "/api";
+const baseURL = "http://v6izk0zf0y.bjhttp.cn";
 
 const service = axios.create({
   baseURL,
@@ -33,4 +41,33 @@ service.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+//get请求
+export function get(url: string, params = {}) {
+  return new Promise((resolve, reject) => {
+    service
+      .get(url, {
+        params: params,
+      })
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+//post请求
+export function post(url: string, data = {}) {
+  return new Promise((resolve, reject) => {
+    service.post(url, data).then(
+      (response) => {
+        resolve(response.data);
+      },
+      (err) => {
+        reject(err);
+      }
+    );
+  });
+}
+
 export default service;

@@ -2,8 +2,8 @@
  * @Desc: 
  * @Autor: cxt
  * @Date: 2021-06-03 17:09:58
- * @LastEditors: cxt
- * @LastEditTime: 2021-06-03 17:21:45
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-06-05 11:21:56
  */
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -22,5 +22,5 @@ export default defineConfig({
         },
       ],
     }),
-  ]
+  ],
 })
