@@ -4,12 +4,12 @@ import { notification } from 'antd';
 import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
 import { getIntl, getLocale, history, Link } from 'umi';
 import RightContent from '@/components/RightContent';
-import type { ResponseError } from 'umi-request';
+import type { ResponseError,RequestInterceptor } from 'umi-request';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 
 const isDev = process.env.NODE_ENV === 'development';
-const loginPath = '/user/login';
+const loginPath = '/login';
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
@@ -24,27 +24,7 @@ export async function getInitialState(): Promise<{
   currentUser?: API.CurrentUser;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
 }> {
-  const fetchUserInfo = async () => {
-    try {
-      const currentUser = await queryCurrentUser();
-      return currentUser;
-    } catch (error) {
-      history.push(loginPath);
-    }
-    return undefined;
-  };
-  // 如果是登录页面，不执行
-  if (history.location.pathname !== loginPath) {
-    const currentUser = await fetchUserInfo();
-    return {
-      fetchUserInfo,
-      currentUser,
-      settings: {},
-    };
-  }
   return {
-    fetchUserInfo,
-    settings: {},
   };
 }
 
@@ -70,6 +50,17 @@ export async function getInitialState(): Promise<{
  };
  * @see https://beta-pro.ant.design/docs/request-cn
  */
+ const headerInfo: RequestInterceptor = (url: string, options: RequestInit) => {
+   const token = localStorage.getItem('token')
+  if (token) {
+    options.headers = {
+      "token":  token ?? '',
+      // 'Content-Type': 'application/json',
+      ...options.headers,
+    }
+  }
+  return { url, options };
+}
 export const request: RequestConfig = {
   errorHandler: (error: ResponseError) => {
     const { messages } = getIntl(getLocale());
@@ -94,6 +85,7 @@ export const request: RequestConfig = {
     }
     throw error;
   },
+  requestInterceptors: [headerInfo],
 };
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
@@ -107,7 +99,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
+      if (!JSON.stringify(localStorage.getItem('token')) && location.pathname !== loginPath) {
         history.push(loginPath);
       }
     },

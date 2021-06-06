@@ -7,8 +7,13 @@
  */
 export default {
   dev: {
-    '/api/': {
-      target: 'https://preview.pro.ant.design',
+    '/user/': {
+      target: 'http://v6izk0zf0y.bjhttp.cn/',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    '/paper/': {
+      target: 'http://v6izk0zf0y.bjhttp.cn/',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
