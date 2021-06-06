@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2021-06-05 10:46:23
- * @LastEditTime: 2021-06-06 09:14:47
+ * @LastEditTime: 2021-06-06 11:11:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \paper\H5\src\utils\request.ts
  */
 import axios from "axios";
-const baseURL = "http://v6izk0zf0y.bjhttp.cn";
+export const baseURL = "http://v6izk0zf0y.bjhttp.cn";
 import store from '../store'
 const service = axios.create({
     baseURL,

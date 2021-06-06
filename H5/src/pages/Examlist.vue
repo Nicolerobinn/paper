@@ -3,7 +3,7 @@
  * @Autor: cxt
  * @Date: 2021-06-03 17:39:15
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-06-06 09:42:04
+ * @LastEditTime: 2021-06-06 11:14:38
 -->
 
 <template>
@@ -31,8 +31,8 @@
 import { List, Cell, ActionSheet, Toast } from "vant";
 import { reactive, defineComponent, toRefs, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { getPaperList, preview, download } from "../utils/api";
-
+import { getPaperList, preview } from "../utils/api";
+import { baseURL } from "../utils/request";
 import { useStore } from "vuex";
 export default defineComponent({
   name: "examlist",
@@ -46,7 +46,7 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
     const state = reactive({
-      list: <any>[{ title: "新初一分班考试语文" }],
+      list: <any>[],
       finished: false,
       show: <boolean>false,
       obj: <any>{},
@@ -77,8 +77,14 @@ export default defineComponent({
           },
         });
       } else {
-        if (store.state.role === 1) {
-          const res = await download(state.obj.fileName);
+        if (!store.state.token) {
+          Toast("请登录");
+          return;
+        }
+        if (store.state.role === 3) {
+          window.open(
+            `${baseURL}/paper/download/${state.obj.fileName}?token=${store.state.token}`
+          );
         } else {
           Toast("请升级为会员");
         }

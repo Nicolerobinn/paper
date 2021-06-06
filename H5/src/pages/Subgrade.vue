@@ -3,7 +3,7 @@
  * @Autor: cxt
  * @Date: 2021-06-03 17:38:56
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-06-05 11:54:34
+ * @LastEditTime: 2021-06-06 10:04:12
 -->
 
 <template>
@@ -30,7 +30,7 @@
       <List :list="list" @callBack="change" />
       <Content :content="content" />
     </div>
-    <SearchList :loading="loading" @load="load" :list="searchList" />
+    <SearchList :list="searchList" />
     <ActionSheet v-model:show="show" :actions="actions" @select="onSelect" />
   </div>
 </template>
@@ -40,8 +40,9 @@ import List from "../components/List.vue";
 import SearchList from "../components/SearchList.vue";
 import Content from "../components/Content.vue";
 import { Col, Row, Search, Toast, ActionSheet } from "vant";
-import { reactive, defineComponent, toRefs, ref, onBeforeMount } from "vue";
-import { getAllSubject } from "../utils/api";
+import { reactive, defineComponent, toRefs, onBeforeMount } from "vue";
+import { getAllSubject, getPaperList, upgradeUser } from "../utils/api";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "subgrade",
   components: {
@@ -55,6 +56,7 @@ export default defineComponent({
     SearchList,
   },
   setup() {
+    const store = useStore();
     onBeforeMount(async () => {
       const res: any = await getAllSubject();
       const { data = [] } = res ?? {};
@@ -74,12 +76,20 @@ export default defineComponent({
       { name: "三个月 29元" },
       { name: "一年  99元" },
     ];
-    const onSearch = (val: string) => Toast(val);
-    const onSelect = (item: { name: string }) => {
+    const onSearch = async (val: string) => {
+      const res: any = await getPaperList({
+        searchinput: val,
+      });
+      const { list = [] } = res?.data ?? {};
+      state.searchList = list;
+    };
+    const onSelect = async (item: { name: string }) => {
       // 默认情况下点击选项时不会自动收起
       // 可以通过 close-on-click-action 属性开启自动收起
       state.show = false;
-      Toast(item.name);
+      await upgradeUser();
+      store.commit("SET_ROLE", 1);
+      Toast("开通成功！");
     };
     const load = () => {
       state.loading = false;

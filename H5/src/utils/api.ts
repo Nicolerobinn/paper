@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-05 10:46:23
- * @LastEditTime: 2021-06-06 08:44:35
+ * @LastEditTime: 2021-06-06 09:59:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \paper\H5\src\utils\api.ts
@@ -28,3 +28,4 @@ export const getAllSubject = () => get("/paper/getAllSubject");
 export const getPaperList = (parmes: Searchlist) => get('/paper/getPaperList', parmes);
 export const preview = (parmes: { fileName: string }) => get(`/paper/preview/${parmes}`);
 export const download = (parmes: { fileName: string }) => get(`/paper/download/${parmes}`);
+export const upgradeUser = () => get('/user/upgradeUser');
