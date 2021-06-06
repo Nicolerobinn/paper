@@ -1,5 +1,5 @@
 <!--
- * @Desc: 
+ * @Desc:
  * @Autor: cxt
  * @Date: 2021-06-03 17:38:56
  * @LastEditors: Please set LastEditors
@@ -55,7 +55,6 @@ export default defineComponent({
     SearchList,
   },
   setup() {
-    const sonRef = ref(null);
     onBeforeMount(async () => {
       const res: any = await getAllSubject();
       const { data = [] } = res ?? {};

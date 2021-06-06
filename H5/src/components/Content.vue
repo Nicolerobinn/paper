@@ -1,135 +1,126 @@
 <!--
- * @Desc: 
+ * @Desc:
  * @Autor: cxt
  * @Date: 2021-06-03 18:01:35
  * @LastEditors: Please set LastEditors
  * @LastEditTime: 2021-06-05 11:54:00
 -->
  <template>
-  <div class="gradeContainer">
-    <div class="inGradeBox">
-      <div class="box">
-        <div
-          v-for="(item, i) in content.gradeList"
-          class="item"
-          :key="i"
-          @click="go(item.type)"
-        >
-          <img
-            :src="`http://tk.naxia100.com/wxpublic/${content.name}.png`"
-            alt=""
-          />
-          <div class="gradeTxt">
-            {{ item.name }}
-          </div>
+    <div class="gradeContainer">
+        <div class="inGradeBox">
+            <div class="box">
+                <div v-for="(item, i) in content.gradeList" class="item" :key="i" @click="go(item.id)">
+                    <img :src="`http://tk.naxia100.com/wxpublic/${content.name}.png`" alt="" />
+                    <div class="gradeTxt">
+                        {{ item.name }}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
  <script lang="ts">
 import {
-  computed,
-  defineComponent,
-  getCurrentInstance,
-  onMounted,
-  PropType,
-  reactive,
-  ref,
-  toRefs,
+    computed,
+    defineComponent,
+    getCurrentInstance,
+    onMounted,
+    PropType,
+    reactive,
+    ref,
+    toRefs,
 } from "vue";
 
 import { Button } from "vant";
 import { useRouter, useRoute } from "vue-router";
 interface Item {
-  name: string;
-  gradeList: any[];
+    name: string;
+    gradeList: any[];
 }
 export default defineComponent({
-  name: "Content",
-  // 父组件传子组件参数
-  props: {
-    content: {
-      type: Object as PropType<Item>,
-      default: () => [{ type: "初一" }],
-    },
-  },
-  components: {
-    Button,
-  },
-  emits: ["emits-name"], // 为了提示作用
-  setup(props: any, context) {
-    const router = useRouter();
-    const route = useRoute();
-
-    onMounted(() => {});
-
-    const go = (text: string) => {
-      router.push({
-        name: "Examlist",
-        query: {
-          title: props.content.name,
-          type: text,
+    name: "Content",
+    // 父组件传子组件参数
+    props: {
+        content: {
+            type: Object as PropType<Item>,
+            default: () => [{ type: "初一" }],
         },
-      });
-    };
-    return {
-      go,
-    };
-  },
+    },
+    components: {
+        Button,
+    },
+    emits: ["emits-name"], // 为了提示作用
+    setup(props: any, context) {
+        const router = useRouter();
+        const route = useRoute();
+
+        onMounted(() => { });
+
+        const go = (i: number | string) => {
+            router.push({
+                name: "Examlist",
+                query: {
+                    id: i
+                },
+            });
+        };
+        return {
+            go,
+        };
+    },
 });
 </script>
 
  <style lang="scss" scoped>
 .gradeContainer {
-  display: -webkit-flex;
-  -webkit-box-direction: normal;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  height: 100%;
-  -webkit-box-orient: horizontal;
-  flex-flow: row wrap;
-  -webkit-flex-flow: row wrap;
-  -webkit-box-flex: 1;
-  flex: 1;
-  -webkit-flex: 1;
-  background-position: 50%;
-  background-image: url(http://tk.naxia100.com/wxpublic/bk1.png);
-  .inGradeBox {
-    box-sizing: border-box;
-    -webkit-box-orient: vertical;
-    flex-flow: column wrap;
-    -webkit-flex-flow: column wrap;
-    -webkit-box-pack: space-evenly;
-    -webkit-justify-content: space-evenly;
-    justify-content: space-evenly;
-    width: 90%;
-    padding: 30px 10px;
-    margin: 10px auto;
-    background-image: url(http://tk.naxia100.com/wxpublic/bk2.png);
+    display: -webkit-flex;
+    -webkit-box-direction: normal;
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    .box {
-      margin: 0px auto;
-      box-sizing: border-box;
-      width: 100%;
-      padding: 0px 10px;
-      display: -webkit-flex;
-      flex-flow: row wrap;
-      .item {
-        text-align: center;
-        margin: 5px 10px;
-        width: 23%;
-        max-height: 18%;
-        img {
-          width: 100%;
+    height: 100%;
+    -webkit-box-orient: horizontal;
+    flex-flow: row wrap;
+    -webkit-flex-flow: row wrap;
+    -webkit-box-flex: 1;
+    flex: 1;
+    -webkit-flex: 1;
+    background-position: 50%;
+    background-image: url(http://tk.naxia100.com/wxpublic/bk1.png);
+    .inGradeBox {
+        box-sizing: border-box;
+        -webkit-box-orient: vertical;
+        flex-flow: column wrap;
+        -webkit-flex-flow: column wrap;
+        -webkit-box-pack: space-evenly;
+        -webkit-justify-content: space-evenly;
+        justify-content: space-evenly;
+        width: 90%;
+        padding: 30px 10px;
+        margin: 10px auto;
+        background-image: url(http://tk.naxia100.com/wxpublic/bk2.png);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        .box {
+            margin: 0px auto;
+            box-sizing: border-box;
+            width: 100%;
+            padding: 0px 10px;
+            display: -webkit-flex;
+            flex-flow: row wrap;
+            .item {
+                text-align: center;
+                margin: 5px 10px;
+                width: 23%;
+                max-height: 18%;
+                img {
+                    width: 100%;
+                }
+                .gradeTxt {
+                    font-size: 0.4rem;
+                }
+            }
         }
-        .gradeTxt {
-          font-size: 0.2rem;
-        }
-      }
     }
-  }
 }
 </style>

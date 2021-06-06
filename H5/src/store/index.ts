@@ -1,21 +1,15 @@
 import { createStore } from "vuex";
 export default createStore({
-  state: {
-    listData: { 1: 10 },
-    num: 10
-  },
-  mutations: {
-    setData(state, value) {
-      state.listData = value
+    state: {
+        token: '',
+        role: 0
     },
-    addNum(state) {
-      state.num = state.num + 10
+    mutations: {
+        SET_TOKEN: (state, value) => {
+            state.token = value
+        },
+        SET_ROLE: (state, value) => {
+            state.role = value
+        },
     }
-  },
-  actions: {
-    setData(context, value) {
-      context.commit('setData', value)
-    },
-  },
-  modules: {}
 });

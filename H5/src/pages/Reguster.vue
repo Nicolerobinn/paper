@@ -1,5 +1,5 @@
 <!--
- * @Desc: 
+ * @Desc:
  * @Autor: cxt
  * @Date: 2021-06-03 17:34:07
  * @LastEditors: Please set LastEditors
@@ -69,14 +69,13 @@ export default defineComponent({
         password: state.value2,
       };
       const res: any = await register(obj);
-      const { token = "", msg } = res;
-      if (token) {
-        Toast("注册成功");
+      const { msg } = res;
+      if (msg === "success") {
+        Toast("注册成功,请登录");
         router.back();
       } else {
         Toast(msg);
       }
-      console.log(res);
     };
     return {
       ...toRefs(state),

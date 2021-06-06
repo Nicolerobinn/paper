@@ -1,5 +1,5 @@
 <!--
- * @Desc: 
+ * @Desc:
  * @Autor: cxt
  * @Date: 2021-06-03 17:34:07
  * @LastEditors: Please set LastEditors
@@ -40,10 +40,10 @@
 </template>
 <script lang="ts" >
 import { NavBar, Button, Field, CellGroup, Toast } from "vant";
-import { reactive, defineComponent, toRefs } from "vue";
+import { reactive, defineComponent, toRefs, computed } from "vue";
 import { useRouter } from "vue-router";
 import { login } from "../utils/api";
-
+import { useStore } from "vuex";
 export default defineComponent({
   name: "login",
   components: {
@@ -53,6 +53,7 @@ export default defineComponent({
     Button,
   },
   setup(props) {
+    const store = useStore();
     const router = useRouter();
     const state = reactive({
       value1: <string>"",
@@ -78,10 +79,11 @@ export default defineComponent({
         password: state.value2,
       };
       const res: any = await login(obj);
-      const { token = "" } = res;
+      const { token = "", role } = res?.data ?? {};
       if (token) {
-        window.localStorage.setItem("accessToken", token);
         Toast("登陆成功");
+        store.commit("SET_TOKEN", token);
+        store.commit("SET_ROLE", role);
         router.back();
       } else {
         Toast("登陆失败");
