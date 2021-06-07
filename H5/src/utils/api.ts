@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2021-06-05 10:46:23
- * @LastEditTime: 2021-06-06 09:59:09
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-06-07 15:09:30
+ * @LastEditors: cxt
  * @Description: In User Settings Edit
  * @FilePath: \paper\H5\src\utils\api.ts
  */
@@ -14,7 +14,7 @@ interface User {
 }
 
 interface Searchlist {
-    subjectid?: string | number;
+    subjectId?: string | number;
     gradeld?: string | number;
     searchinput?: string;
     pageSize?: number;

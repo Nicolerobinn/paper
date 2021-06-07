@@ -2,8 +2,8 @@
  * @Desc:
  * @Autor: cxt
  * @Date: 2021-06-03 17:39:15
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-06-06 11:14:38
+ * @LastEditors: cxt
+ * @LastEditTime: 2021-06-07 15:09:22
 -->
 
 <template>
@@ -34,6 +34,7 @@ import { useRouter } from "vue-router";
 import { getPaperList, preview } from "../utils/api";
 import { baseURL } from "../utils/request";
 import { useStore } from "vuex";
+
 export default defineComponent({
   name: "examlist",
   components: {
@@ -52,8 +53,10 @@ export default defineComponent({
       obj: <any>{},
     });
     onMounted(async () => {
+      const {gradeld , subjectId}= router.currentRoute.value.query
       const res: any = await getPaperList({
-        gradeld: router.currentRoute.value.query.id as string,
+        gradeld:gradeld as string | number,
+        subjectId:subjectId as string | number,
       });
       const { list = [], pageNum } = res?.data ?? {};
       state.list = list;

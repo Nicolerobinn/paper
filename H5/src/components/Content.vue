@@ -2,8 +2,8 @@
  * @Desc:
  * @Autor: cxt
  * @Date: 2021-06-03 18:01:35
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-06-05 11:54:00
+ * @LastEditors: cxt
+ * @LastEditTime: 2021-06-07 15:06:23
 -->
  <template>
     <div class="gradeContainer">
@@ -22,14 +22,9 @@
 
  <script lang="ts">
 import {
-    computed,
     defineComponent,
-    getCurrentInstance,
     onMounted,
     PropType,
-    reactive,
-    ref,
-    toRefs,
 } from "vue";
 
 import { Button } from "vant";
@@ -61,7 +56,8 @@ export default defineComponent({
             router.push({
                 name: "Examlist",
                 query: {
-                    id: i
+                    gradeld: i,
+                    subjectId:props.content.id
                 },
             });
         };
