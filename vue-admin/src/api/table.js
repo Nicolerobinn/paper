@@ -34,3 +34,9 @@ export function getAllSubject() {
     method: 'get',
   })
 }
+export function preview(parmes) {
+  return request({
+    url:`/paper/preview/${parmes}`,
+    method: 'get',
+  })
+}

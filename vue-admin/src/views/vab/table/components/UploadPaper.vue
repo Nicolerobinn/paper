@@ -77,9 +77,10 @@ export default {
     formData.append('name',name )
     formData.append('subjectId',subjectId )
     const res = await uploadWord(formData)
-    if(res){
-      message.succsee('上传成功！');
+    if(res.code == 1){
+      message.success('上传成功！');
       this.$parent.fetch()
+      this.$parent.close()
     }
    }, 
    handleOk(){

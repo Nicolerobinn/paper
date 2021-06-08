@@ -4,7 +4,7 @@
     <a-col :span="8">
       <div class="queryBox">
         <div>名称:</div>
-        <a-input  v-model:value="query.searchinput"/>
+        <a-input  v-model:value="query.searchInput"/>
       </div>
     </a-col>
     <a-col :span="8">
@@ -21,7 +21,7 @@
       年级:
       <a-select
       allowClear
-        v-model:value="query.gradeld"
+        v-model:value="query.gradeId"
         style="width: 200px"
         :options="gradeList"
         />
@@ -52,22 +52,44 @@
      <template #operation="{ record }">
       <div class="editable-row-operations">
         <span >
-          <a @click="editColumns(record)">Edit</a>
+          <a @click="editColumns(record)">编辑</a>
         </span> &nbsp;&nbsp;&nbsp;
         <span >
-          <a style="color:red" @click="deleteColumns(record)">Delete</a>
+          <a style="color:red" @click="deleteColumns(record)">删除</a>
+        </span> &nbsp;&nbsp;&nbsp;
+        <span >
+          <a  @click="viewColumns(record)">预览</a>
+        </span> &nbsp;&nbsp;&nbsp;
+        <span >
+          <a  @click="downlodColumns(record)">下载</a>
         </span>
       </div>
     </template>
   </a-table>
+    <a-drawer
+      title="Basic Drawer"
+      placement="right"
+      :closable="false"
+      :visible="visible"
+      :after-visible-change="afterVisibleChange"
+      @close="onClose"
+    >
+    <p>{{text}}</p>
+    </a-drawer>
   <EditModal :visible="editShow" :editData="editData"  :gra="gra" :subjectList="subjectList"/>
   <UploadModal :visible="uploadShow" :gra="gra" :subjectList="subjectList"/>
 </template>
 <script>
   import EditModal from './components/EditePaper'
   import UploadModal from './components/UploadPaper'
-  import { getList, doDelete,getAllSubject } from '@/api/table'
+  import { getList, doDelete,getAllSubject,preview } from '@/api/table'
   import { message } from 'ant-design-vue'
+  import {
+    getAccessToken,
+  } from '@/utils/accessToken'
+  import {
+    baseURL,
+  } from '@/config'
   const columns = [
     {
       title: '年级',
@@ -90,6 +112,8 @@
   export default {
     data() {
       return {
+        text:'',
+        visible:false,
         data: [],
         pagination: {
           showLessItems: true,
@@ -99,8 +123,8 @@
           pageSize:10
         },
         query: {
-          searchinput:undefined,
-          gradeld:undefined,
+          searchInput:undefined,
+          gradeId:undefined,
           subjectId:undefined
         },
         loading: false,
@@ -122,6 +146,20 @@
       this.getSearchValue()
     },
     methods: {
+      onClose(){
+        this.visible = false
+      },
+      downlodColumns(item){
+          window.open(
+            `${baseURL}/paper/download/${item.fileName}?token=${getAccessToken()}`
+          );
+      },
+      async viewColumns(item){
+      const res = await  preview(item.id)
+      if(res.code  == 1){
+        this.text = res.data
+      }
+      },
       close(){
         this.uploadShow = false
         this.editShow = false
@@ -152,7 +190,7 @@
         this.gradeList = this.gra[id]
         }else{
           this.gradeList = []
-          this.query.gradeld = undefined
+          this.query.gradeId = undefined
         }
       },
       editColumns(item) {
@@ -177,12 +215,12 @@
           pageSize: this.pagination.pageSize,
           pageNum: 1,
         }
-        const {searchinput,gradeld,subjectId} = this.query
-        if(searchinput){
-          obj.searchinput = searchinput
+        const {searchInput,gradeId,subjectId} = this.query
+        if(searchInput){
+          obj.searchInput = searchInput
         }
-        if(gradeld){
-          obj.gradeld = gradeld
+        if(gradeId){
+          obj.gradeId = gradeId
         }        
         if(subjectId){
           obj.subjectId = subjectId
