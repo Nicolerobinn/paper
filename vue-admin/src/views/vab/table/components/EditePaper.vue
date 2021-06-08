@@ -45,8 +45,8 @@ export default {
      },
     rules : {
       name: [{ required: true, message: '请填写试卷名称', trigger: 'blur' }],
-      subjectId: [{ required: true, message: '请选择学科', trigger: 'change' }],
-      gradeId: [{ required: true, message: '请选择年级', trigger: 'change' }],
+      subjectId: [{ required: true, message: '请选择学科', trigger: 'change' , type: 'number'}],
+      gradeId: [{ required: true, message: '请选择年级', trigger: 'change' , type: 'number'}],
     },
      gradeList:[]
    }
@@ -59,6 +59,8 @@ export default {
        this.formState.name = this.editData.name
        this.formState.subjectId = this.editData.subjectId
        this.formState.gradeId = this.editData.gradeId
+       this.formState.id = this.editData.id
+       this.gradeList = this.gra[this.editData.gradeId]
      }
      this.show = boole
    }
@@ -66,8 +68,9 @@ export default {
  methods: {
    async submit(){
     const res = await doEdit(this.formState)
-    if(res){
-      message.succsee('修改成功！');
+    if(res.code == 1){
+      message.success('修改成功！');
+      this.$parent.close()
       this.$parent.fetch()
     }
    }, 

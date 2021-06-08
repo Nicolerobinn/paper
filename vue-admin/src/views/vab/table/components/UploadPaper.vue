@@ -48,9 +48,9 @@ export default {
      },
     rules : {
       name: [{ required: true, message: '请填写试卷名称', trigger: 'blur' }],
-      subjectId: [{ required: true, message: '请选择学科', trigger: 'change' }],
-      gradeId: [{ required: true, message: '请选择年级', trigger: 'change' }],
-      file: [{ required: true, message: '请上传文件·', trigger: 'change' }],
+      subjectId: [{ required: true, message: '请选择学科', trigger: 'change' , type: 'number'}],
+      gradeId: [{ required: true, message: '请选择年级', trigger: 'change' , type: 'number'}],
+      file: [{ required: true, message: '请上传文件·', trigger: 'change', type: 'object'  }],
     },
      gradeList:[]
    }
@@ -59,7 +59,6 @@ export default {
  mounted() {},
  watch:{
    visible(boole){
-     console.log(boole)
      this.show = boole
    }
  },
@@ -101,7 +100,7 @@ export default {
     const files = input.files;
     // 判断一手是否有文件
     if (!files.length) return
-    this.formState = files
+    this.formState.file= files
   },
    handleChange(id){
      if(id){
